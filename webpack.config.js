@@ -9,7 +9,18 @@ const isProd = process.env.NODE_ENV === 'production'
 const isDev = !isProd
 
 const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
-
+const jsLoaders = () => {
+   const loaders = [
+      {
+         loader: 'babel-loader',
+         options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-proposal-class-properties']
+         }
+      }
+   ]
+   return loaders
+}
 module.exports = {
    context: path.resolve(__dirname, 'src'),
    mode: "development",
@@ -18,7 +29,13 @@ module.exports = {
       filename: filename('js'),
       path: path.resolve(__dirname, 'dist'),
    },
-
+   // resolve: {
+   //    extentions: ['.js'],
+   //    alias: {
+   //       '@': path.resolve(__dirname, 'src'),
+   //       '@core': path.resolve(__dirname, 'src/core')
+   //    }
+   // },
    plugins: [
       new HtmlWebpackPlugin({
          template: 'index.html',
@@ -50,6 +67,11 @@ module.exports = {
                "sass-loader",
             ],
          },
+         {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            use: jsLoaders()
+         }
       ],
    },
    devServer: {
