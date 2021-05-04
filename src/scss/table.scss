@@ -24,6 +24,10 @@
       border: 1px solid $border-color;
       border-top: none;
       background-color: #f8f9fa;
+      position: relative;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;  
    }
    .row-data {
       display: flex;
@@ -39,6 +43,10 @@
       border-top: 0;
       border-left: 0;
       height: 100%;
+      position: relative;
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;  
    }
    .cell {
       min-width: 40px;
@@ -54,8 +62,43 @@
 
       &.selected {
          border: none;
-         outline: 2px solid #3c74ff;
+         outline: 2px solid $primary-color;
          z-index: 2;
       }
    }
-}
+   
+   .col-resize, .row-resize {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      opacity: 0;
+      background-color: $primary-color;
+
+      &:hover, &:active {
+         opacity: 1;
+      }
+   }
+   .col-resize {
+      width: 3px;
+      top: 0;
+
+      &:hover {
+         cursor: col-resize;
+      }
+      &:active {
+         bottom: -5000px;
+         z-index: 1000;
+      }
+   }
+   .row-resize {
+      height: 4px;
+      left: 0;
+      &:hover {
+         cursor: row-resize;
+      }
+      &:active {
+         right: -5000px;
+         z-index: 1000;
+      }
+   }
+   }
